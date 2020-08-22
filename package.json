@@ -1,0 +1,46 @@
+{
+  "name": "fe-tpl-cli",
+  "version": "0.0.6",
+  "description": "CLI",
+  "main": "index.js",
+  "scripts": {
+    "lint": "fecs --rule"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "gavinguo",
+  "license": "MIT",
+  "bin": {
+    "fe-tpl-cli": "./bin/tpl.js",
+    "fe-tpl-cli-init": "./bin/tpl-init.js"
+  },
+  "files": [
+    "bin",
+    "docs",
+    "templates",
+    "lib",
+    "config.json",
+    ".gitignore",
+    ".npmignore",
+    ".npmrc"
+  ],
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.17.1",
+    "inquirer": "^5.2.0",
+    "ncp": "^2.0.0",
+    "ora": "^2.1.0",
+    "pacote": "^8.1.6",
+    "shelljs": "^0.8.2",
+    "figlet": "^1.4.0"
+  },
+  "preferGlobal": true,
+  "devDependencies": {
+    "husky": "^1.0.0-rc.13",
+    "fecs": "^1.6.1"
+  }
+}
