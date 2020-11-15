@@ -6,9 +6,9 @@
 
 import React from 'react';
 import {useSelector, useDispatch, useStore} from 'react-redux';
-import {onChangeNumber, getUserinfo} from './action.js';
+import {onChangeNumber, getUserinfo} from './handler.js';
 
-const Home = () => {
+const home = () => {
     const dispatch = useDispatch();
     const getState = useStore().getState;
     const {number, air} = useSelector(state => state.home);
@@ -25,4 +25,4 @@ const Home = () => {
     );
 };
 
-export default React.memo(Home);
+export default React.memo(home);

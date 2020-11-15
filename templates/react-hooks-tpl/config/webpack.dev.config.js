@@ -13,9 +13,9 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const proxyReqHeaders = {
     Cookie: '',
-    Origin: 'http://www.demo.com',
-    Host: 'www.demo.com',
-    Referer: 'http://www.demo.com'
+    Origin: 'http://dev.xxx.com',
+    Host: 'dev.xxx.com',
+    Referer: 'http://dev.xxx.com'
 };
 
 module.exports = (env = {}) => {
@@ -30,8 +30,7 @@ module.exports = (env = {}) => {
                     test: /\.css$/,
                     use: [
                         'style-loader',
-                        'css-loader',
-                        'postcss-loader'
+                        'css-loader'
                     ]
                 },
                 {
@@ -39,7 +38,6 @@ module.exports = (env = {}) => {
                     use: [
                         'style-loader',
                         'css-loader',
-                        'postcss-loader',
                         'less-loader'
                     ]
                 },
@@ -48,7 +46,6 @@ module.exports = (env = {}) => {
                     use: [
                         'style-loader',
                         'css-loader',
-                        'postcss-loader',
                         'sass-loader'
                     ]
                 }
@@ -71,16 +68,37 @@ module.exports = (env = {}) => {
         ],
         devServer: {
             contentBase: path.resolve(__dirname, '../dist'),
+            host: '0.0.0.0',
             open: true,
             port: 8300,
             compress: true,
+            disableHostCheck: true,
             hot: true,
+            quiet: true,
+            https: true,
+            // 允许绑定本地域名
+            allowedHosts: [
+                'dev.dev.xxx.com'
+            ],
+            historyApiFallback: true, // 防止 'history路由模式' 下开发时跳转
             ...(
                 env.proxyTo === 'online'
                 ? {
                     proxy: {
                         '/newdev2': {
-                            target: 'http://www.demo.com',
+                            target: 'http://dev.xxx.com',
+                            changeOrigin: true,
+                            secure: false,
+                            onProxyReq: (proxyReq, req, res) => {
+                                if (proxyReqHeaders) {
+                                    for (const key in proxyReqHeaders) {
+                                        proxyReq.setHeader(key, proxyReqHeaders[key]);
+                                    }
+                                }
+                            }
+                        },
+                        '/hairuo/request.ajax': {
+                            target: 'http://dev.xxx.com',
                             changeOrigin: true,
                             secure: false,
                             onProxyReq: (proxyReq, req, res) => {

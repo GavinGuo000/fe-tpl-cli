@@ -14,7 +14,7 @@ const services = {};
  * @return {Object} response Promise
  */
 services.getUserinfo = (params = {}) => {
-    const path = '/newdev2/login/userinfo/get.ajax';
+    const path = '/home/serinfo/get.ajax';
     return axios.post(path);
 };
 

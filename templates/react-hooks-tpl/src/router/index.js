@@ -5,20 +5,43 @@
  **/
 
 import React, {Component, Suspense} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect, withRouter} from 'react-router-dom';
 
-const Home = React.lazy(() => import('../Home/index.jsx'));
+import Entry from '@/component/Entry/index.jsx';
+import Loading from '@/common/components/Loading/index';
+import {flatten} from '@/common/utils';
+import {MENU_ROUTES} from './config';
 
-export default class Router extends Component {
+class Router extends Component {
     render() {
         return (
-            <Suspense fallback={<div>loading...</div>}>
-                <BrowserRouter>
-                    <Switch>
-                        <Route path='/' component={Home} />
-                    </Switch>
-                </BrowserRouter>
-            </Suspense>
+            <div className='dev-wrap'>
+                <Suspense fallback={<Loading />}>
+                    <BrowserRouter>
+                        <Route
+                            path="/"
+                            component={props => (
+                                <Entry {...props}>
+                                    <Switch>
+                                        {
+                                            flatten(MENU_ROUTES).map((item, key) => (
+                                                <Route
+                                                    key={item.key}
+                                                    path={item.path}
+                                                    component={item.component}
+                                                    {...props}
+                                                />
+                                            ))
+                                        }
+                                    </Switch>
+                                </Entry>
+                            )}
+                        />
+                    </BrowserRouter>
+                </Suspense>
+            </div>
         );
     }
 }
+
+export default withRouter(Router);

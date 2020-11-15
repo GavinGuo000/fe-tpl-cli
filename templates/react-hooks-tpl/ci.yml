@@ -1,0 +1,18 @@
+Global:
+    tool: build_submitter
+
+Default:
+    profile: [online]
+
+Profiles:
+    - profile:
+      name: online
+      env: cmc_standard
+      command: sh build.sh
+      release: true
+
+    - profile:
+      name: preonline
+      env: cmc_standard
+      command: sh build.sh
+      release: true
